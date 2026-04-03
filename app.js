@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
         renderStudents();
     }
 
+    function deleteStudent(index) {
+        const students = getStudents();
+        students.splice(index, 1);
+        saveStudents(students);
+        renderStudents();
+    }
+
     function renderStudents() {
         const students = getStudents();
         studentList.innerHTML = '';
@@ -29,10 +36,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         students.forEach((student, idx) => {
             const li = document.createElement('li');
-            li.textContent = `${idx + 1}. ${student.name} (Age: ${student.age}, Grade: ${student.grade})`;
+            const span = document.createElement('span');
+            span.textContent = `${idx + 1}. ${student.name} (Age: ${student.age}, Grade: ${student.grade})`;
+            const btn = document.createElement('button');
+            btn.textContent = 'Delete';
+            btn.className = 'delete-btn';
+            btn.dataset.index = idx;
+            btn.setAttribute('aria-label', `Delete ${student.name}`);
+            li.appendChild(span);
+            li.appendChild(btn);
             studentList.appendChild(li);
         });
     }
+
+    studentList.addEventListener('click', function (e) {
+        if (e.target.classList.contains('delete-btn')) {
+            const index = parseInt(e.target.dataset.index, 10);
+            deleteStudent(index);
+        }
+    });
 
     studentForm.addEventListener('submit', function (e) {
         e.preventDefault();
