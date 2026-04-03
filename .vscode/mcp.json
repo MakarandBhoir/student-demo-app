@@ -1,0 +1,8 @@
+{
+    "servers": {
+        "github-makarand": {
+            "type": "http",
+            "url": "https://api.githubcopilot.com/mcp/"
+        }
+    }
+}
